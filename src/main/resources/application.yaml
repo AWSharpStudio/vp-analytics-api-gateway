@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: vp-analytics-api-gateway
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: vp-analytics-ms-ingestion-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/ingestion/**
+        - id: ms-metrics-route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/metrics/**
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    reactor.netty.http.client: INFO
+    org.springframework.boot.autoconfigure: WARN
