@@ -1,0 +1,17 @@
+server:
+  port: 8089
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: vp-analytics-ms-ingestion-route
+          uri: http://localhost:${wiremock.server.port}
+          predicates:
+            - Path=/api/v1/ingestion/**
